@@ -1,4 +1,5 @@
 <?php
+include 'config.php';
 include 'class/Dbconn.php';
 include 'class/Abteilung.php';
 include 'class/Mitarbeiter.php';
@@ -23,67 +24,67 @@ if ($action === 'showList') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter();
         $mArr = $m->getAllAsObjects();
-        include 'view/listemitarbeiter.php';
+        include PATH_TO_VIEW .'/listemitarbeiter.php';
     } elseif ($area === 'Abteilung'){
         $m = new Abteilung();
         $mArr = $m->getAllAsObjects();
-        include 'view/listeabteilung.php';
+        include PATH_TO_VIEW .'/listeabteilung.php';
     }
 } elseif ($action === 'showInsert') {
     if ($area === 'Mitarbeiter') {
-        include 'view/eingabemitarbeiter.php';
+        include PATH_TO_VIEW .'/eingabemitarbeiter.php';
     } elseif ($area === 'Abteilung'){
-        include 'view/eingabeabteilung.php';
+        include PATH_TO_VIEW .'/eingabeabteilung.php';
     }
 } elseif ($action === 'insert') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter();
         $m->createObject($vorname, $nachname);
         $mArr = $m->getAllAsObjects();
-        include 'view/listemitarbeiter.php';
+        include PATH_TO_VIEW .'/listemitarbeiter.php';
     } elseif ($area === 'Abteilung'){
         $m = new Abteilung();
         $m->createObject($name);
         $mArr = $m->getAllAsObjects();
-        include 'view/listeabteilung.php';
+        include PATH_TO_VIEW .'/listeabteilung.php';
     }
 } elseif ($action === 'showUpdate') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter();
         $mitarbeiter = $m->getObjectById($id);
-        include 'view/eingabemitarbeiter.php';
+        include PATH_TO_VIEW .'/eingabemitarbeiter.php';
     } elseif ($area === 'Abteilung'){
         $m = new Abteilung();
         $abteilung = $m->getObjectById($id);
-        include 'view/eingabeabteilung.php';
+        include PATH_TO_VIEW .'/eingabeabteilung.php';
     }
 } elseif ($action === 'update') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter($id, $vorname, $nachname);
         $m->updateObject(); // in Tabelle festschreiben
         $mArr = $m->getAllAsObjects();
-        include 'view/listemitarbeiter.php';
+        include PATH_TO_VIEW .'/listemitarbeiter.php';
     } elseif ($area === 'Abteilung'){
         $m = new Abteilung($id, $name);
         $m->updateObject(); // in Tabelle festschreiben
         $mArr = $m->getAllAsObjects();
-        include 'view/listeabteilung.php';
+        include PATH_TO_VIEW .'/listeabteilung.php';
     }
 } elseif ($action === 'delete') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter();
         $m->deleteObject($id);
         $mArr = $m->getAllAsObjects();
-        include 'view/listemitarbeiter.php';
+        include PATH_TO_VIEW .'/listemitarbeiter.php';
     } elseif ($area === 'Abteilung'){
         $m = new Abteilung();
         $m->deleteObject($id);
         $mArr = $m->getAllAsObjects();
-        include 'view/listeabteilung.php';
+        include PATH_TO_VIEW .'/listeabteilung.php';
     }
 } else {
     $message = 'Datei nicht gefunden: 404';
-    include 'view/fehler.php';
+    include PATH_TO_VIEW .'/fehler.php';
 }
 
 ?>
