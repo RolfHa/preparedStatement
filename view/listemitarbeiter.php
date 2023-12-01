@@ -8,9 +8,8 @@
     <title>Mitarbeiter Liste</title>
 </head>
 <body>
-<a href="index.php?action=showInsert&area=Mitarbeiter">
-    <button>Neuer Mitarbeiter</button>
-</a>
+<?php include 'view/nav.php'; ?>
+
 <h2>Mitarbeiter Liste</h2>
 
 <table style="width:20%">

@@ -10,6 +10,7 @@
     </title>
 </head>
 <body>
+<?php include 'view/nav.php'; ?>
 <h2>
     <?php
     // ternär Operator (? :)

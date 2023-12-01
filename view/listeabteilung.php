@@ -8,9 +8,7 @@
     <title>Abteilung Liste</title>
 </head>
 <body>
-<a href="index.php?action=showInsert&area=Abteilung">
-    <button>Neue Abteilung</button>
-</a>
+<?php include 'view/nav.php'; ?>
 <h2>Abteilung Liste</h2>
 
 <table style="width:20%">
