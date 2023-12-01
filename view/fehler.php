@@ -8,6 +8,7 @@
     <title>Fehler</title>
 </head>
 <body><h2>
+    <p>Es ist ein Fehler aufgetreten, der Admin ist informiert.</p>
 <?php
 echo $message;
 ?>
