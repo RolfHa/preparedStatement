@@ -12,7 +12,7 @@ class Mitarbeiter
      * @param string|null $vorname
      * @param string|null $nachname
      */
-    public function __construct(int $id = null, string $vorname = null, string $nachname = null, int $abteilungId)
+    public function __construct(int $id = null, string $vorname = null, string $nachname = null, int $abteilungId = null)
     {
         if (isset($id)) {
             $this->id = $id;
@@ -30,10 +30,12 @@ class Mitarbeiter
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getVorname(): string
+    public function getAbteilungId(): ?int
+    {
+        return $this->abteilungId;
+    }
+
+    public function getVorname(): ?string
     {
         return $this->vorname;
     }
@@ -62,6 +64,12 @@ class Mitarbeiter
     public function setNachname(string $nachname): void
     {
         $this->nachname = $nachname;
+    }
+
+    public function getAbteilungName():string{
+        $a = new Abteilung();
+        $abt = $a->getObjectById($this->abteilungId);
+        return $abt->getName();
     }
 
     /**
