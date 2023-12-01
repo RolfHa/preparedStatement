@@ -5,18 +5,20 @@ class Mitarbeiter
     private int|null $id;
     private string|null $vorname;
     private string|null $nachname;
+    private int|null $abteilungId;
 
     /**
      * @param int|null $id
      * @param string|null $vorname
      * @param string|null $nachname
      */
-    public function __construct(int $id = null, string $vorname = null, string $nachname = null)
+    public function __construct(int $id = null, string $vorname = null, string $nachname = null, int $abteilungId)
     {
         if (isset($id)) {
             $this->id = $id;
             $this->vorname = $vorname;
             $this->nachname = $nachname;
+            $this->abteilungId = $abteilungId;
         }
     }
 
@@ -65,18 +67,20 @@ class Mitarbeiter
     /**
      * @param string $vorname
      * @param string $nachname
+     * @param int $abteilungId
      * @return Mitarbeiter
      */
-    public function createObject(string $vorname, string $nachname):Mitarbeiter
+    public function createObject(string $vorname, string $nachname, int $abteilungId):Mitarbeiter
     {
         $pdo = Dbconn::getConn();
-        $stmt = $pdo->prepare("INSERT INTO mitarbeiter (vorname, nachname) VALUES (:vorname, :nachname)");
+        $stmt = $pdo->prepare("INSERT INTO mitarbeiter (vorname, nachname, abteilungId) VALUES (:vorname, :nachname, :abteilungId)");
         // insert one row
         $stmt->bindParam('vorname', $vorname, PDO::PARAM_STR);
         $stmt->bindParam('nachname', $nachname, PDO::PARAM_STR);
+        $stmt->bindParam('abteilungId', $abteilungId, PDO::PARAM_INT);
         $stmt->execute();
 
-        return new Mitarbeiter($pdo->lastInsertId(), $vorname, $nachname);
+        return new Mitarbeiter($pdo->lastInsertId(), $vorname, $nachname, $abteilungId);
     }
 
     /**

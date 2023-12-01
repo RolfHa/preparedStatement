@@ -17,6 +17,8 @@ $area = ($_REQUEST['area']) ?? 'Mitarbeiter'; // Objekte aus welcher Klasse: Kla
 $vorname = ($_POST['vorname']) ?? '';
 $nachname = ($_POST['nachname']) ?? '';
 $name = ($_POST['name']) ?? '';
+$abteilungId = ($_POST['abteilungId']) ?? '';
+
 
 // index.php ist der controller der kontrolliert
 // was angezeigt bzw. was ausgeführt werden soll
@@ -39,7 +41,7 @@ if ($action === 'showList') {
 } elseif ($action === 'insert') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter();
-        $m->createObject($vorname, $nachname);
+        $m->createObject($vorname, $nachname, $abteilungId);
         $mArr = $m->getAllAsObjects();
         include PATH_TO_VIEW .'/liste'.$area.'.php';
     } elseif ($area === 'Abteilung'){

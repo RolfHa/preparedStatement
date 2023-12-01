@@ -27,6 +27,7 @@
             <td><?php echo $mArr[$i]->getId(); ?></td>
             <td><?php echo $mArr[$i]->getVorname(); ?></td>
             <td><?php echo $mArr[$i]->getNachname(); ?></td>
+            <td><?php echo $mArr[$i]->getAbteilungId(); ?></td>
             <td><a href="index.php?action=delete&area=Mitarbeiter&id=<?php echo $mArr[$i]->getId(); ?>">
                     <button>Löschen</button>
                 </a></td>
