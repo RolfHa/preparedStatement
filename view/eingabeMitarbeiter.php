@@ -44,11 +44,7 @@
         </tr>
         <tr>
             <td> <label for="abteilungId"> Abteilung </label></td>
-            <td><select name="abteilungId" id="abteilungId">
-                    <option value="1">Einkauf</option>
-                    <option value="2">Verkauf</option>
-                    <option value="3" selected>Marketing</option>
-                </select></td>
+            <td><?php echo $a->getSelectOptionElement($mitarbeiter); ?></td>
         </tr>
         <tr>
             <td><input type="submit" value="senden"></td>

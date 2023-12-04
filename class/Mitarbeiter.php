@@ -127,10 +127,11 @@ class Mitarbeiter
     }
     public function updateObject():void {
         $pdo = Dbconn::getConn();
-        $stmt = $pdo->prepare("UPDATE mitarbeiter SET vorname=:vorname, nachname=:nachname WHERE id=:id");
+        $stmt = $pdo->prepare("UPDATE mitarbeiter SET vorname=:vorname, nachname=:nachname, abteilungId=:abteilungId WHERE id=:id");
         $stmt->bindParam('id', $this->id, PDO::PARAM_INT);
         $stmt->bindParam('vorname', $this->vorname, PDO::PARAM_STR);
         $stmt->bindParam('nachname', $this->nachname, PDO::PARAM_STR);
+        $stmt->bindParam('abteilungId', $this->abteilungId, PDO::PARAM_INT);
         $stmt->execute();
     }
 }

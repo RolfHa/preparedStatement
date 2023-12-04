@@ -34,6 +34,7 @@ if ($action === 'showList') {
     }
 } elseif ($action === 'showInsert') {
     if ($area === 'Mitarbeiter') {
+        $a = new Abteilung();
         include PATH_TO_VIEW .'/eingabe'.$area.'.php';
     } elseif ($area === 'Abteilung'){
         include PATH_TO_VIEW .'/eingabe'.$area.'.php';
@@ -54,6 +55,7 @@ if ($action === 'showList') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter();
         $mitarbeiter = $m->getObjectById($id);
+        $a = new Abteilung();
         include PATH_TO_VIEW .'/eingabe'.$area.'.php';
     } elseif ($area === 'Abteilung'){
         $m = new Abteilung();
@@ -62,7 +64,7 @@ if ($action === 'showList') {
     }
 } elseif ($action === 'update') {
     if ($area === 'Mitarbeiter') {
-        $m = new Mitarbeiter($id, $vorname, $nachname);
+        $m = new Mitarbeiter($id, $vorname, $nachname, $abteilungId);
         $m->updateObject(); // in Tabelle festschreiben
         $mArr = $m->getAllAsObjects();
         include PATH_TO_VIEW .'/liste'.$area.'.php';
