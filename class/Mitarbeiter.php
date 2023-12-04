@@ -101,7 +101,6 @@ class Mitarbeiter
         $mitarbeiters = $stmt->fetchAll(PDO::FETCH_CLASS, 'Mitarbeiter');
         return $mitarbeiters;
     }
-
     /**
      * @param int $id
      * @return Mitarbeiter|false

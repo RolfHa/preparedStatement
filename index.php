@@ -1,13 +1,12 @@
 <?php
 include 'config.php';
-include 'class/Dbconn.php';
-include 'class/Abteilung.php';
-include 'class/Mitarbeiter.php';
+spl_autoload_register(function ($className){
+    include 'class/' . $className . '.php';
+});
 
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
-
+//echo '<pre>';
+//print_r($_REQUEST);
+//echo '</pre>';
 
 // Variablenempfang
 // Null Coalescing Operator (??)
@@ -55,6 +54,7 @@ if ($action === 'showList') {
     if ($area === 'Mitarbeiter') {
         $m = new Mitarbeiter();
         $mitarbeiter = $m->getObjectById($id);
+        print_r($mitarbeiter);
         $a = new Abteilung();
         include PATH_TO_VIEW .'/eingabe'.$area.'.php';
     } elseif ($area === 'Abteilung'){

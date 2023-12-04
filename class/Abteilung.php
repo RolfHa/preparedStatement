@@ -1,6 +1,6 @@
 <?php
 
-class Abteilung
+class Abteilung implements ITableBasics
 {
     private int|null $id;
     private string|null $name;

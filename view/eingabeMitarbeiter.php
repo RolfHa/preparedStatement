@@ -44,7 +44,16 @@
         </tr>
         <tr>
             <td> <label for="abteilungId"> Abteilung </label></td>
-            <td><?php echo $a->getSelectOptionElement($mitarbeiter); ?></td>
+            <td><?php
+                if (isset($mitarbeiter)){
+
+                    echo HtmlHelper::getSelectOptionElement('abteilungId', $a, $mitarbeiter->getAbteilungId());
+                } else {
+                    echo HtmlHelper::getSelectOptionElement('abteilungId', $a);
+                }
+                ?>
+
+            </td>
         </tr>
         <tr>
             <td><input type="submit" value="senden"></td>
