@@ -133,4 +133,23 @@ class Mitarbeiter
         $stmt->bindParam('abteilungId', $this->abteilungId, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    /**
+     * @param int $abteilungId
+     * @return bool
+     */
+    public function existsMitarbeiterMitAbteilungsId(int $abteilungId):bool{
+        $mitarbeiters = $this->getAllAsObjects();
+        $existsAbteilungId = false;
+        foreach ($mitarbeiters as $mitarbeiter){
+            if ($mitarbeiter->getAbteilungId() === $abteilungId){
+                $existsAbteilungId = true;
+                // falls ein Mitarbeiter die abteilungsId hat
+                // Abbruch, es reicht ja ein Mitarbeiter
+                break;
+            }
+        }
+        return $existsAbteilungId;
+    }
 }
+

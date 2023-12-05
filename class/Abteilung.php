@@ -91,12 +91,23 @@ class Abteilung implements ITableBasics
      * @param int $id
      * @return void
      */
-    public function deleteObject(int $id): void
+    public function deleteObject(int $id): ?string
     {
-        $pdo = Dbconn::getConn();
-        $stmt = $pdo->prepare("DELETE FROM abteilung WHERE id=:id");
-        $stmt->bindParam('id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        // FK Fehlermeldung erscheint, wenn es einen Mitarbeiter gibt, der im
+        // Attribute abteilungId den Wert von $id hat
+        // dies müssen wir abfangen:
+        // Gibt es einen Mitarbeiter mit dieser abteilungsId
+        $m = new Mitarbeiter();
+        $existsMitarbeiter = $m->existsMitarbeiterMitAbteilungsId($id);
+        if ($existsMitarbeiter) {
+            // ich kann Abteilung nicht löschen
+            return 'Ich kann Abteilung nicht löschen';
+        } else {
+            $pdo = Dbconn::getConn();
+            $stmt = $pdo->prepare("DELETE FROM abteilung WHERE id=:id");
+            $stmt->bindParam('id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+        }
     }
 
     public function updateObject(): void
@@ -125,10 +136,10 @@ class Abteilung implements ITableBasics
             $abtId = $m->getAbteilungId();
             foreach ($abteilungen as $a) {
                 $selected = '';
-                if ($abtId === $a->getId()){
+                if ($abtId === $a->getId()) {
                     $selected = ' selected';
                 }
-                $html .= '<option value="' . $a->getId() . '"' . $selected. '>'
+                $html .= '<option value="' . $a->getId() . '"' . $selected . '>'
                     . $a->getName() . '</option>';
             }
             $html .= '</select>';
