@@ -91,23 +91,19 @@ class Abteilung implements ITableBasics
      * @param int $id
      * @return void
      */
-    public function deleteObject(int $id): bool|string
+    public function deleteObject(int $id): void
     {
         // FK Fehlermeldung erscheint, wenn es einen Mitarbeiter gibt, der im
         // Attribute abteilungId den Wert von $id hat
-        // dies müssen wir abfangen:
-        // Gibt es einen Mitarbeiter mit dieser abteilungsId
-        $m = new Mitarbeiter();
-        $existsMitarbeiter = $m->existsMitarbeiterMitAbteilungsId($id);
-        if ($existsMitarbeiter) {
-            // ich kann Abteilung nicht löschen
-            return 'Ich kann Abteilung nicht löschen';
-        } else {
+        // dies müssen wir abfangen mit try-catch
+        try{
             $pdo = Dbconn::getConn();
             $stmt = $pdo->prepare("DELETE FROM abteilung WHERE id=:id");
             $stmt->bindParam('id', $id, PDO::PARAM_INT);
             $stmt->execute();
-            return false;
+        } catch (Exception $e){
+            throw new Exception('Fehler! Es gibt noch Mitarbeiter in dieser Abteilung<br>'.
+             'Löschen nicht möglich');
         }
     }
 

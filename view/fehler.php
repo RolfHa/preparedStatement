@@ -10,7 +10,6 @@
 <body>
 <?php include 'view/nav.php'; ?>
 <h2>
-    <p>Es ist ein Fehler aufgetreten, der Admin ist informiert.</p>
 <?php
 echo $message;
 ?>

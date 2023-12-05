@@ -83,26 +83,26 @@ try {
             include PATH_TO_VIEW . '/liste' . $area . '.php';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
-            $message = $m->deleteObject($id);
-            if ($message !== false) {
-                include PATH_TO_VIEW . '/fehler.php';
-            } else {
-                $mArr = $m->getAllAsObjects();
-                include PATH_TO_VIEW . '/liste' . $area . '.php';
-            }
+            $m->deleteObject($id);
+            $mArr = $m->getAllAsObjects();
+            include PATH_TO_VIEW . '/liste' . $area . '.php';
         }
     } else {
         $message = 'Datei nicht gefunden: 404';
         include PATH_TO_VIEW . '/fehler.php';
     }
 } catch (Exception $e) {
-    // Die Fehlermeldung mit Datum wird im log.txt-File hinterlegt
-    // Reihenfolge: aktuellste Datum oben
-    $dt = new DateTime();
-    $logString = $dt->format('d.m.Y H:i:s') . ' ' . $e->getMessage();
-    file_put_contents('log/log.txt',
-        $logString . PHP_EOL . file_get_contents('log/log.txt'));
-    $message = 'Es ist ein Fehler aufgetreten, der Admin ist informiert.';
+    if (substr($e->getMessage(), 0, 6) === 'Fehler') {
+        $message = $e->getMessage();
+    } else {
+        // Die Fehlermeldung mit Datum wird im log.txt-File hinterlegt
+        // Reihenfolge: aktuellste Datum oben
+        $dt = new DateTime();
+        $logString = $dt->format('d.m.Y H:i:s') . ' ' . $e->getMessage();
+        file_put_contents('log/log.txt',
+            $logString . PHP_EOL . file_get_contents('log/log.txt'));
+        $message = 'Es ist ein Fehler aufgetreten, der Admin ist informiert.';
+    }
     include PATH_TO_VIEW . '/fehler.php';
 }
 ?>
