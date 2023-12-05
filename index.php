@@ -83,7 +83,7 @@ if ($action === 'showList') {
     } elseif ($area === 'Abteilung') {
         $m = new Abteilung();
         $message = $m->deleteObject($id);
-        if (isset($message)) {
+        if ($message !== false) {
             include PATH_TO_VIEW . '/fehler.php';
         } else {
             $mArr = $m->getAllAsObjects();

@@ -91,7 +91,7 @@ class Abteilung implements ITableBasics
      * @param int $id
      * @return void
      */
-    public function deleteObject(int $id): ?string
+    public function deleteObject(int $id): bool|string
     {
         // FK Fehlermeldung erscheint, wenn es einen Mitarbeiter gibt, der im
         // Attribute abteilungId den Wert von $id hat
@@ -107,6 +107,7 @@ class Abteilung implements ITableBasics
             $stmt = $pdo->prepare("DELETE FROM abteilung WHERE id=:id");
             $stmt->bindParam('id', $id, PDO::PARAM_INT);
             $stmt->execute();
+            return false;
         }
     }
 
