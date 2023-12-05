@@ -46,45 +46,59 @@ class Abteilung implements ITableBasics
 
 
     /**
-     * @param string $vorname
-     * @param string $nachname
-     * @return Mitarbeiter
+     * @param string $name
+     * @return Abteilung
+     * @throws Exception
      */
     public function createObject(string $name): Abteilung
     {
-        $pdo = Dbconn::getConn();
-        $stmt = $pdo->prepare("INSERT INTO abteilung (name) VALUES (:name)");
-        // insert one row
-        $stmt->bindParam('name', $name, PDO::PARAM_STR);
-        $stmt->execute();
+        try {
+            $pdo = Dbconn::getConn();
+            $stmt = $pdo->prepare("INSERT INTO abteilung (name) VALUES (:name)");
+            // insert one row
+            $stmt->bindParam('name', $name, PDO::PARAM_STR);
+            $stmt->execute();
 
-        return new Abteilung($pdo->lastInsertId(), $name);
+            return new Abteilung($pdo->lastInsertId(), $name);
+        } catch (Exception $e) {
+            throw new Exception($e);
+        }
     }
 
     /**
-     * @return Abteilung[]|false
+     * @return Abteilung[]
+     * @throws Exception
      */
-    public function getAllAsObjects()
+    public function getAllAsObjects() : array
     {
-        $pdo = Dbconn::getConn();
-        $stmt = $pdo->prepare("SELECT * FROM abteilung");
-        $stmt->execute();
-        $abteilungen = $stmt->fetchAll(PDO::FETCH_CLASS, 'Abteilung');
-        return $abteilungen;
+        try {
+            $pdo = Dbconn::getConn();
+            $stmt = $pdo->prepare("SELECT * FROM abteilung");
+            $stmt->execute();
+            $abteilungen = $stmt->fetchAll(PDO::FETCH_CLASS, 'Abteilung');
+            return $abteilungen;
+        } catch (Exception $e) {
+            throw new Exception($e);
+        }
     }
 
     /**
      * @param int $id
-     * @return Abteilung|false
+     * @return Abteilung
+     * @throws Exception
      */
     public function getObjectById(int $id): Abteilung
     {
-        $pdo = Dbconn::getConn();
-        $stmt = $pdo->prepare("SELECT * FROM abteilung WHERE id=:id");
-        $stmt->bindParam('id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $m = $stmt->fetchObject('Abteilung');
-        return $m;
+        try {
+            $pdo = Dbconn::getConn();
+            $stmt = $pdo->prepare("SELECT * FROM abteilung WHERE id=:id");
+            $stmt->bindParam('id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $m = $stmt->fetchObject('Abteilung');
+            return $m;
+        } catch (Exception $e) {
+            throw new Exception($e);
+        }
     }
 
     /**
@@ -96,14 +110,17 @@ class Abteilung implements ITableBasics
         // FK Fehlermeldung erscheint, wenn es einen Mitarbeiter gibt, der im
         // Attribute abteilungId den Wert von $id hat
         // dies müssen wir abfangen mit try-catch
-        try{
+        try {
             $pdo = Dbconn::getConn();
-            $stmt = $pdo->prepare("DELETE FROM abteilung WHERE id=:id");
+            $stmt = $pdo->prepare("DELETE FROM abteilungs WHERE id=:id");
             $stmt->bindParam('id', $id, PDO::PARAM_INT);
             $stmt->execute();
-        } catch (Exception $e){
-            throw new Exception('Fehler! Es gibt noch Mitarbeiter in dieser Abteilung<br>'.
-             'Löschen nicht möglich');
+        } catch (Exception $e) {
+echo $e->getMessage();
+// @todo Unterscheiden, ob SQLSTATE == 42S02 (table not found)
+// oder SQLSTATE == 23000 (FK constraint)
+            throw new Exception('Fehler! Es gibt noch Mitarbeiter in dieser Abteilung<br>' .
+                'Löschen nicht möglich');
         }
     }
 

@@ -14,7 +14,7 @@
 <table style="width:20%">
     <tr>
         <th>Id</th>
-        <th>Vorname</th>
+        <th>Name</th>
 
         <th></th>
         <th></th>
