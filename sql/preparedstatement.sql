@@ -19,6 +19,15 @@ INSERT INTO `abteilung` (`id`, `name`) VALUES
                                            (1, 'Verkauf'),
                                            (2, 'Einkauf');
 
+CREATE TABLE user (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(45), passwort VARCHAR(256), rolle VARCHAR(15));
+INSERT INTO user(id, name, passwort, rolle)
+VALUES(NULL, 'admin', '$2y$10$8LpI68r3bGXxp/T5HxKiuesmVGwQ02QXXOvnbpwcGRfq6PBCxGzRW', 'admin');
+INSERT INTO user(id, name, passwort, rolle)
+VALUES(NULL, 'user','$2y$10$gzuxDtagOCOFVktymDFcdecRFFblKkpZcp6loZ0zDEJHYXLMh.Z9m','user');
+
+-- username passwort
+-- admin    pan
+-- user     tom
 --
 -- Indizes der exportierten Tabellen
 --
