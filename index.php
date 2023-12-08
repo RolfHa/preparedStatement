@@ -29,15 +29,15 @@ try {
             $view = User::checkLogin($name, $passwort);
             if (isset($_SESSION['userId'])) {
                 $area = 'mitarbeiter';
-                //$view = 'liste';
+                $view = 'liste';
                 $m = new Mitarbeiter();
                 $mArr = $m->getAllAsObjects();
             }
         } else {
             $view = 'login';
         }
-        echo $area;
-        echo $view;
+        //echo $area;
+        //echo $view;
     }
 
 // index.php ist der controllecho $area;er der kontrolliert
@@ -46,30 +46,35 @@ try {
         if ($area === 'Mitarbeiter') {
             $m = new Mitarbeiter();
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         }
     } elseif ($action === 'showInsert') {
         if ($area === 'Mitarbeiter') {
             $a = new Abteilung();
-            include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            $view = 'eingabe';
         } elseif ($area === 'Abteilung') {
-            include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            $view = 'eingabe';
         }
     } elseif ($action === 'insert') {
         if ($area === 'Mitarbeiter') {
             $m = new Mitarbeiter();
             $m->createObject($vorname, $nachname, $abteilungId);
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $m->createObject($name);
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         }
     } elseif ($action === 'showUpdate') {
         if ($area === 'Mitarbeiter') {
@@ -77,11 +82,13 @@ try {
             $mitarbeiter = $m->getObjectById($id);
             print_r($mitarbeiter);
             $a = new Abteilung();
-            include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            $view = 'eingabe';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $abteilung = $m->getObjectById($id);
-            include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+            $view = 'eingabe';
         }
     } elseif ($action === 'update') {
         if ($area === 'Mitarbeiter') {
