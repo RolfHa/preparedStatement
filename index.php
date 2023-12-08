@@ -24,9 +24,9 @@ try {
     session_start();
     if (isset($_SESSION['userId'])) {
         $u = new User();
-        $id = $_SESSION['userId'];
-        $user = $u->getObjectById($id);
-        print_r($user);
+        $userId = $_SESSION['userId'];
+        $user = $u->getObjectById($userId);
+        //print_r($user);
     } else {
         if ($action === 'checkLogin') {
             $view = User::checkLogin($name, $passwort);
@@ -125,11 +125,14 @@ try {
             $view = 'liste';
         }
     } else {
-        // wird gebraucht, wenn ein eingeloggter user einen 2. tab im Browser öffnet
-        $m = new Mitarbeiter();
-        $mArr = $m->getAllAsObjects();
-        $area = 'Mitarbeiter';
-        $view = 'liste';
+        // wird gebraucht, wenn ein eingeloggter user einen 2. Tab im Browser öffnet
+        if (isset($user) && $user instanceof User) {
+           // print_r($user);
+            $m = new Mitarbeiter();
+            $mArr = $m->getAllAsObjects();
+            $area = 'Mitarbeiter';
+            $view = 'liste';
+        }
     }
     // zentrales include für alle Fallunterscheidungen
     include PATH_TO_VIEW . '/' . $view . $area . '.php';
