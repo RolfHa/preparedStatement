@@ -95,12 +95,14 @@ try {
             $m = new Mitarbeiter($id, $vorname, $nachname, $abteilungId);
             $m->updateObject(); // in Tabelle festschreiben
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung($id, $name);
             $m->updateObject(); // in Tabelle festschreiben
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            // PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         }
     } elseif ($action === 'delete') {
         if ($area === 'Mitarbeiter') {
