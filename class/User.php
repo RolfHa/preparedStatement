@@ -3,6 +3,44 @@
 class User
 {
 
+    private int $id;
+    private string $name;
+    private string $rolle;
+
+    /**
+     * @param int $id
+     * @param string $name
+     * @param string $rolle
+     */
+    public function __construct(int $id = null, string $name = null, string $rolle = null)
+    {
+        if (isset($id)) {
+            $this->id = $id;
+            $this->name = $name;
+            $this->rolle = $rolle;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getRolle(): string
+    {
+        return $this->rolle;
+    }
+
+
+    public function getObjectById(int $id)
+    {
+        $pdo = Dbconn::getConn();
+        $stmt = $pdo->prepare("SELECT id, name, rolle FROM user WHERE id=:id");
+        $stmt->bindParam('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $user = $stmt->fetchObject('User');
+        return $user;
+    }
+
+
     public static function checkLogin(string $name, string $passwort): string
     {
         $pdo = Dbconn::getConn();

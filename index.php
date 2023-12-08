@@ -23,11 +23,17 @@ try {
     // Authentifizieren
     session_start();
     if (isset($_SESSION['userId'])) {
-
+        $u = new User();
+        $id = $_SESSION['userId'];
+        $user = $u->getObjectById($id);
+        print_r($user);
     } else {
         if ($action === 'checkLogin') {
             $view = User::checkLogin($name, $passwort);
             if (isset($_SESSION['userId'])) {
+                $u = new User();
+                $user = $u->getObjectById($_SESSION['userId']);
+                //print_r($user);
                 $area = 'mitarbeiter';
                 $view = 'liste';
                 $m = new Mitarbeiter();
@@ -109,15 +115,21 @@ try {
             $m = new Mitarbeiter();
             $m->deleteObject($id);
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $m->deleteObject($id);
             $mArr = $m->getAllAsObjects();
-            include PATH_TO_VIEW . '/liste' . $area . '.php';
+            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+            $view = 'liste';
         }
     } else {
-        //$view = 'login';
+        // wird gebraucht, wenn ein eingeloggter user einen 2. tab im Browser öffnet
+        $m = new Mitarbeiter();
+        $mArr = $m->getAllAsObjects();
+        $area = 'Mitarbeiter';
+        $view = 'liste';
     }
     // zentrales include für alle Fallunterscheidungen
     include PATH_TO_VIEW . '/' . $view . $area . '.php';
