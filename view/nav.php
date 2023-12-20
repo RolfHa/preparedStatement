@@ -16,3 +16,6 @@ if ($user->getRolle() === 'admin'){
 <?php
 }
 ?>
+<a href="index.php?action=ausloggen">
+    <button>Ausloggen</button>
+</a>

@@ -1,0 +1,11 @@
+Lastenheft
+
+Die Inhaberin einer Firma hat den Überblick über seine Mitarbeiter und deren Abteilung verloren,
+die App soll ihm helfen, den Überblick wiederzufinden.
+Es ist eine Webanwendung.
+Die "Sekretärin" soll in der Lage die Mitarbeiterinnen sich anzeigen zu lassen, neue Mitarbeiterinnen einzu-
+pflegen, deren Daten zu ändern und zu löschen.
+Die "Inhaberin" soll darüber hinaus in der Lage sein, das Gleiche mit den Abteilungen zu machen.
+Das Registrieren der Benutzer "Sekretärin" und "Inhaberin" gehört nicht zu den Aufgaben.
+Die App soll nach 1 Monat lauffähig auf einem lokalen Rechner sein.
+Die Oberflächen werden in einem Mock-up festgehalten.

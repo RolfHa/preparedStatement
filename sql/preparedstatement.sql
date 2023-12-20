@@ -26,7 +26,7 @@ INSERT INTO user(id, name, passwort, rolle)
 VALUES(NULL, 'user','$2y$10$gzuxDtagOCOFVktymDFcdecRFFblKkpZcp6loZ0zDEJHYXLMh.Z9m','user');
 
 -- username passwort
--- admin    pan
+-- admin    Pan
 -- user     tom
 --
 -- Indizes der exportierten Tabellen

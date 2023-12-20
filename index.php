@@ -124,15 +124,23 @@ try {
             //include PATH_TO_VIEW . '/liste' . $area . '.php';
             $view = 'liste';
         }
+    } elseif ($action === 'ausloggen') {
+        unset($_SESSION['userId']);// session beenden
+        header("Location: http://localhost/preparedStatementFinn"); // Weiterleitung auf Startseite
     } else {
         // wird gebraucht, wenn ein eingeloggter user einen 2. Tab im Browser öffnet
         if (isset($user) && $user instanceof User) {
-           // print_r($user);
+            // print_r($user);
             $m = new Mitarbeiter();
             $mArr = $m->getAllAsObjects();
             $area = 'Mitarbeiter';
             $view = 'liste';
         }
+    }
+    // Abfangen, falls user (Nicht-Admin) versucht url mit GET-Variablen zu editieren
+    if (isset($user) && $user->getRolle() !== 'admin' && $area === 'Abteilung') {
+        unset($_SESSION['userId']);// session beenden
+        header("Location: http://localhost/preparedStatementFinn"); // Weiterleitung auf Startseite
     }
     // zentrales include für alle Fallunterscheidungen
     include PATH_TO_VIEW . '/' . $view . $area . '.php';
