@@ -26,14 +26,14 @@ try {
         $u = new User();
         $userId = $_SESSION['userId'];
         $user = $u->getObjectById($userId);
-        //print_r($user);
+
     } else {
         if ($action === 'checkLogin') {
             $view = User::checkLogin($name, $passwort);
             if (isset($_SESSION['userId'])) {
                 $u = new User();
                 $user = $u->getObjectById($_SESSION['userId']);
-                //print_r($user);
+
                 $area = 'mitarbeiter';
                 $view = 'liste';
                 $m = new Mitarbeiter();
@@ -42,8 +42,7 @@ try {
         } else {
             $view = 'login';
         }
-        //echo $area;
-        //echo $view;
+
     }
 
 // index.php ist der controllecho $area;er der kontrolliert
@@ -56,16 +55,16 @@ try {
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $mArr = $m->getAllAsObjects();
-            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+
             $view = 'liste';
         }
     } elseif ($action === 'showInsert') {
         if ($area === 'Mitarbeiter') {
             $a = new Abteilung();
-            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+
             $view = 'eingabe';
         } elseif ($area === 'Abteilung') {
-            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+
             $view = 'eingabe';
         }
     } elseif ($action === 'insert') {
@@ -73,13 +72,13 @@ try {
             $m = new Mitarbeiter();
             $m->createObject($vorname, $nachname, $abteilungId);
             $mArr = $m->getAllAsObjects();
-            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+
             $view = 'liste';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $m->createObject($name);
             $mArr = $m->getAllAsObjects();
-            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+
             $view = 'liste';
         }
     } elseif ($action === 'showUpdate') {
@@ -88,12 +87,12 @@ try {
             $mitarbeiter = $m->getObjectById($id);
             print_r($mitarbeiter);
             $a = new Abteilung();
-            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+
             $view = 'eingabe';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $abteilung = $m->getObjectById($id);
-            //include PATH_TO_VIEW . '/eingabe' . $area . '.php';
+
             $view = 'eingabe';
         }
     } elseif ($action === 'update') {
@@ -101,13 +100,13 @@ try {
             $m = new Mitarbeiter($id, $vorname, $nachname, $abteilungId);
             $m->updateObject(); // in Tabelle festschreiben
             $mArr = $m->getAllAsObjects();
-            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+
             $view = 'liste';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung($id, $name);
             $m->updateObject(); // in Tabelle festschreiben
             $mArr = $m->getAllAsObjects();
-            // PATH_TO_VIEW . '/liste' . $area . '.php';
+
             $view = 'liste';
         }
     } elseif ($action === 'delete') {
@@ -115,13 +114,13 @@ try {
             $m = new Mitarbeiter();
             $m->deleteObject($id);
             $mArr = $m->getAllAsObjects();
-            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+
             $view = 'liste';
         } elseif ($area === 'Abteilung') {
             $m = new Abteilung();
             $m->deleteObject($id);
             $mArr = $m->getAllAsObjects();
-            //include PATH_TO_VIEW . '/liste' . $area . '.php';
+
             $view = 'liste';
         }
     } elseif ($action === 'ausloggen') {
@@ -130,7 +129,7 @@ try {
     } else {
         // wird gebraucht, wenn ein eingeloggter user einen 2. Tab im Browser öffnet
         if (isset($user) && $user instanceof User) {
-            // print_r($user);
+
             $m = new Mitarbeiter();
             $mArr = $m->getAllAsObjects();
             $area = 'Mitarbeiter';
