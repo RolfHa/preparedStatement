@@ -119,7 +119,7 @@ class Abteilung implements ITableBasics
             $a = $stmt->fetchObject('Abteilung');
             $m = new Mitarbeiter();
             $a->mitarbeiterArr = $m->getObjectsByAbteilungId($a->getId());
-            return $m;
+            return $a;
         } catch (Exception $e) {
             throw new Exception($e);
         }
