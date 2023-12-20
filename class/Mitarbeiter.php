@@ -151,5 +151,18 @@ class Mitarbeiter
         }
         return $existsAbteilungId;
     }
+
+    /**
+     * @param int $mitarbeiterId
+     * @return Mitarbeiter[]
+     */
+    public function getObjectsByAbteilungId(int $abteilungId): array{
+        $pdo = Dbconn::getConn();
+        $stmt = $pdo->prepare("SELECT * FROM mitarbeiter WHERE abteilungId=:id");
+        $stmt->bindParam('id', $abteilungId, PDO::PARAM_INT);
+        $stmt->execute();
+        $mitarbeiters = $stmt->fetchAll(PDO::FETCH_CLASS, 'Mitarbeiter');
+        return $mitarbeiters;
+    }
 }
 

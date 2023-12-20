@@ -5,19 +5,35 @@ class Abteilung implements ITableBasics
     private int|null $id;
     private string|null $name;
 
+    /**
+     * @var Mitarbeiter[]
+     */
+    private array $mitarbeiterArr;
 
     /**
      * @param int|null $id
      * @param string|null $vorname
      * @param string|null $nachname
      */
-    public function __construct(int $id = null, string $name = null)
+    public function __construct(int $id = null, string $name = null, array $mitarbeiterArr = null)
     {
         if (isset($id)) {
             $this->id = $id;
             $this->name = $name;
+            if (isset($mitarbeiterArr)){
+                $this->mitarbeiterArr = $mitarbeiterArr;
+            }
         }
     }
+
+    /**
+     * @return array|Mitarbeiter[]
+     */
+    public function getMitarbeiterArr(): array
+    {
+        return $this->mitarbeiterArr;
+    }
+
 
     /**
      * @return int
@@ -76,6 +92,12 @@ class Abteilung implements ITableBasics
             $stmt = $pdo->prepare("SELECT * FROM abteilung");
             $stmt->execute();
             $abteilungen = $stmt->fetchAll(PDO::FETCH_CLASS, 'Abteilung');
+            // Erweiterung: zu jeder Abteilung sollen die Mitarbeiter geladen werden
+            for ($i = 0; $i <count($abteilungen) ; $i++) {
+                $m = new Mitarbeiter();
+                $abteilungen[$i]->mitarbeiterArr = $m->getObjectsByAbteilungId($abteilungen[$i]->id);
+            }
+
             return $abteilungen;
         } catch (Exception $e) {
             throw new Exception($e);
@@ -112,7 +134,7 @@ class Abteilung implements ITableBasics
         // dies müssen wir abfangen mit try-catch
         try {
             $pdo = Dbconn::getConn();
-            $stmt = $pdo->prepare("DELETE FROM abteilungs WHERE id=:id");
+            $stmt = $pdo->prepare("DELETE FROM abteilung WHERE id=:id");
             $stmt->bindParam('id', $id, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
