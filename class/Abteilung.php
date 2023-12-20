@@ -93,9 +93,9 @@ class Abteilung implements ITableBasics
             $stmt->execute();
             $abteilungen = $stmt->fetchAll(PDO::FETCH_CLASS, 'Abteilung');
             // Erweiterung: zu jeder Abteilung sollen die Mitarbeiter geladen werden
-            for ($i = 0; $i <count($abteilungen) ; $i++) {
+            foreach ($abteilungen as $index => &$abteilung) {
                 $m = new Mitarbeiter();
-                $abteilungen[$i]->mitarbeiterArr = $m->getObjectsByAbteilungId($abteilungen[$i]->id);
+                $abteilung->mitarbeiterArr = $m->getObjectsByAbteilungId($abteilung->id);
             }
 
             return $abteilungen;
@@ -116,7 +116,9 @@ class Abteilung implements ITableBasics
             $stmt = $pdo->prepare("SELECT * FROM abteilung WHERE id=:id");
             $stmt->bindParam('id', $id, PDO::PARAM_INT);
             $stmt->execute();
-            $m = $stmt->fetchObject('Abteilung');
+            $a = $stmt->fetchObject('Abteilung');
+            $m = new Mitarbeiter();
+            $a->mitarbeiterArr = $m->getObjectsByAbteilungId($a->getId());
             return $m;
         } catch (Exception $e) {
             throw new Exception($e);
